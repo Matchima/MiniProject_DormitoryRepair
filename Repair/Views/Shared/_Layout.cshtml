@@ -1,0 +1,151 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+   
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+        }
+
+        a {
+            color: #c0392b;
+        }
+
+        .navbar-default .navbar-brand {
+            color: rgba(179, 68, 68, 1);
+        }
+
+        .navbar-default .navbar-brand {
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .navbar-default {
+            font-family: 'Kanit', sans-serif;
+            font-size: 14px;
+            background-color: #7f8c8d;
+            border-width: 0px;
+        }
+
+            .navbar-default .navbar-nav > li > a {
+                color: rgba(255, 255, 255, 1);
+                background-color:#95a5a6;
+            }
+
+                .navbar-default .navbar-nav > li > a:hover,
+                .navbar-default .navbar-nav > li > a:focus {
+                    color: rgba(255, 255, 255, 1);
+                    background-color: #bdc3c7;
+                }
+
+            .navbar-default .navbar-nav > .active > a,
+            .navbar-default .navbar-nav > .active > a:hover,
+            .navbar-default .navbar-nav > .active > a:focus {
+                color: rgba(255, 255, 255, 1);
+                background-color: rgba(25, 160, 148, 1);
+            }
+
+            .navbar-default .navbar-toggle {
+                border-color: #19a094;
+            }
+
+                .navbar-default .navbar-toggle:hover,
+                .navbar-default .navbar-toggle:focus {
+                    background-color: #19a094;
+                }
+
+                .navbar-default .navbar-toggle .icon-bar {
+                    background-color: #19a094;
+                }
+
+                .navbar-default .navbar-toggle:hover .icon-bar,
+                .navbar-default .navbar-toggle:focus .icon-bar {
+                    background-color: #009688;
+                }
+    </style>
+
+   
+    
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container"  >
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <i class="glyphicon glyphicon-wrench navbar-brand"> </i>
+                @Html.ActionLink("Dormitory Repair", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                   
+                    <li>@Html.ActionLink("ติดต่อหอพัก", "Contact", "Home")</li>
+
+                
+
+                   @if (Session["permiss"] != null && Session["permiss"].ToString() == "admin"   )
+                   {
+                        <li >@Html.ActionLink("จัดการแจ้งซ่อม", "Index", "repairs")</li>
+                        <li>@Html.ActionLink("จัดการนักศึกษา", "Index", "students")</li>
+                        <li >@Html.ActionLink("จัดการพนักงาน", "Index", "employees")</li>
+                   }
+                   else if (Session["permiss"] != null && Session["permiss"].ToString() == "student" )
+                   {
+
+                        <li>@Html.ActionLink("แจ้งซ่อม", "Index", "repairs")</li>
+
+                   }
+              
+
+</ul>
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    @if (Session["UserID"] != null)
+                    {
+                        <li>
+                            @Html.ActionLink("ยินดีต้อนรับ คุณ" + @Session["UserName"].ToString(), "Index", "Home")
+                        </li>
+
+                        <li>@Html.ActionLink("[ ออกจากระบบ ]", "LogOut", "Home")</li>
+
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("เข้าสู่ระบบ", "Login", "Home")</li>
+                        
+                    }
+                    </ul>
+</div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <br>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+    <script>
+    $(document).ready(function(){
+    $('#myTable').DataTable();
+    });
+    </script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css")
+    @Scripts.Render("https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js")
+   
+    @RenderSection("scripts", required: false)
+</body>
+</html>

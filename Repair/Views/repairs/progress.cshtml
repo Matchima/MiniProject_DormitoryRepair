@@ -1,0 +1,249 @@
+﻿@if (Session["UserID"] == null || Session["permiss"].ToString() == "student")
+{
+    Response.Redirect("~/Home/Index");
+}
+@model IEnumerable<Repair.Models.repair>
+@{
+    ViewBag.Title = "progress";
+}
+
+<h2>สถานะ: progress</h2>
+
+@if (Session["UserID"] != null && Session["permiss"].ToString() == "admin")
+{
+    <div class="col-md-12" align="center">
+        <h3>Status </h3>
+        <button class="btn btn-danger" style="margin-left:5px" onclick="location.href='@Url.Action("Index", "repairs")'">
+          
+          All
+            <button class="btn btn-primary" style="margin-left:5px" onclick="location.href='@Url.Action("New", "repairs")'">
+             
+               New
+            </button>
+
+            <button class="btn btn-success" style="margin-left:5px" onclick="location.href='@Url.Action("Finished", "repairs")'">
+                
+              Finished
+            </button>
+            <br>
+            <br>
+</div>
+
+
+
+}
+
+<table class="table table-hover" id="myTable">
+    <tr style="background-color:#f5f5f5;">
+        @if (Session["UserID"] != null && Session["permiss"].ToString() == "student")
+        {
+            <th style="text-align:center;">
+                <label>หัวข้อที่แจ้ง</label>
+            </th>
+            <th style="text-align:center;">
+                <label>รายละเอียด</label>
+            </th>
+            <th style="text-align:center;">
+
+                <label>วัน/เวลาที่แจ้ง</label>
+            </th>
+            <th style="text-align:center;">
+                <label>สถานะ</label>
+            </th>
+
+            <th style="text-align:center;">
+                <label>อณุญาตเข้าห้องเมื่อไม่มีคนอยู่</label>
+            </th>
+            <th style="text-align:center;"></th>
+
+        }
+
+        else
+        {
+            <th style="text-align:center;">
+
+                <label>หัวข้อที่แจ้ง</label>
+            </th>
+            <th style="text-align:center;">
+
+                <label>รายละเอียด</label>
+            </th>
+            <th style="text-align:center;">
+
+                <label>วัน/เวลาที่แจ้ง</label>
+            </th>
+            <th style="text-align:center;">
+
+                <label>สถานะ</label>
+            </th>
+            <th style="text-align:center;">
+
+                <label>รหัสนักศึกษาที่แจ้ง</label>
+            </th>
+            <th>
+
+                <label>ห้องที่แจ้ง</label>
+            </th>
+            <th style="text-align:center;">
+
+                <label>อณุญาตเข้าห้องเมื่อไม่มีคนอยู่</label>
+            </th>
+            <th style="text-align:center;"></th>
+
+        }
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        if (Session["UserID"] != null && Session["permiss"].ToString() == "student")
+        {
+            <tr style="text-align:center;">
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.jobname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.descript)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.datetime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.status)
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.choich)
+                </td>
+                <td>
+                    @if (Session["UserID"] != null && Session["permiss"].ToString() == "student")
+                    {
+                        if (item.status == "New")
+                        {
+                            <button class="btn btn-primary" style="margin-left:5px" onclick="location.href='@Url.Action("Edit", "repairs",new { id = item.ID })'">
+                                <i class="glyphicon glyphicon-pencil"> </i>
+
+                            </button>
+
+                            <button class="btn btn-success" style="margin-left:5px" onclick="location.href='@Url.Action("Details", "repairs",new { id = item.ID })'">
+                                <i class="glyphicon glyphicon-info-sign"> </i>
+
+                            </button>
+                            <button class="btn btn-danger" style="margin-left:5px" onclick="location.href='@Url.Action("Delete", "repairs",new { id = item.ID })'">
+                                <i class="glyphicon glyphicon-trash"> </i>
+
+                            </button>
+
+
+                        }
+
+                        if (item.status == "progress")
+                        {
+
+                            <button class="btn btn-primary disabled " disabled style="margin-left:5px" onclick="location.href='@Url.Action("Edit", "repairs",new { id = item.ID })'">
+                                <i class="glyphicon glyphicon-pencil"> </i>
+
+                            </button>
+
+                            <button class="btn btn-success" style="margin-left:5px" onclick="location.href='@Url.Action("Details", "repairs",new { id = item.ID })'">
+                                <i class="glyphicon glyphicon-info-sign"> </i>
+
+                            </button>
+                            <button class="btn btn-danger disabled" disabled style="margin-left:5px" onclick="location.href='@Url.Action("Delete", "repairs",new { id = item.ID })'">
+                                <i class="glyphicon glyphicon-trash"> </i>
+
+                            </button>
+
+                        }
+
+                        if (item.status == "Finished")
+                        {
+
+                            <button class="btn btn-primary disabled" disabled style="margin-left:5px" onclick="location.href='@Url.Action("Edit", "repairs",new { id = item.ID })'">
+                                <i class="glyphicon glyphicon-pencil"> </i>
+
+                            </button>
+
+                            <button class="btn btn-success" style="margin-left:5px" onclick="location.href='@Url.Action("Details", "repairs",new { id = item.ID })'">
+                                <i class="glyphicon glyphicon-info-sign"> </i>
+
+                            </button>
+                            <button class="btn btn-danger disabled" disabled style="margin-left:5px" onclick="location.href='@Url.Action("Delete", "repairs",new { id = item.ID })'">
+                                <i class="glyphicon glyphicon-trash"> </i>
+
+                            </button>
+
+                        }
+                    }
+
+                    @if (Session["UserID"] != null && Session["permiss"].ToString() == "admin")
+                    {
+                        <button class="btn btn-primary " style="margin-left:5px" onclick="location.href='@Url.Action("Edit", "repairs",new { id = item.ID })'">
+                            <i class="glyphicon glyphicon-pencil"> </i>
+
+                        </button>
+
+                        <button class="btn btn-success" style="margin-left:5px" onclick="location.href='@Url.Action("Details", "repairs",new { id = item.ID })'">
+                            <i class="glyphicon glyphicon-info-sign"> </i>
+
+                        </button>
+                        <button class="btn btn-danger" style="margin-left:5px" onclick="location.href='@Url.Action("Delete", "repairs",new { id = item.ID })'">
+                            <i class="glyphicon glyphicon-trash"> </i>
+
+                        </button>
+                    }
+
+
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr style="text-align:center;">
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.jobname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.descript)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.datetime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.studentid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.roomno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.choich)
+                </td>
+                <td>
+                    <button class="btn btn-primary " style="margin-left:5px" onclick="location.href='@Url.Action("Edit", "repairs",new { id = item.ID })'">
+                        <i class="glyphicon glyphicon-pencil"> </i>
+
+                    </button>
+
+                    <button class="btn btn-success" style="margin-left:5px" onclick="location.href='@Url.Action("Details", "repairs",new { id = item.ID })'">
+                        <i class="glyphicon glyphicon-info-sign"> </i>
+
+                    </button>
+                    <button class="btn btn-danger" style="margin-left:5px" onclick="location.href='@Url.Action("Delete", "repairs",new { id = item.ID })'">
+                        <i class="glyphicon glyphicon-trash"> </i>
+
+                    </button>
+                </td>
+            </tr>
+        }
+
+    }
+
+</table>
+

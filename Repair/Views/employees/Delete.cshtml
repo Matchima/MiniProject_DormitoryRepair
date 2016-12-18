@@ -1,0 +1,76 @@
+﻿@if (Session["UserID"] == null || Session["permiss"].ToString() == "student")
+{
+    Response.Redirect("~/Home/Index");
+}
+@model Repair.Models.employee
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>employee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.employeeid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employeeid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tell)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tell)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.permiss)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.permiss)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

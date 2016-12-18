@@ -1,0 +1,135 @@
+﻿
+@if (Session["UserID"] == null)
+{
+    Response.Redirect("~/Home/Index");
+}
+@model Repair.Models.repair
+
+@{
+    ViewBag.Title = "Create";
+    ViewBag.MyValue = Session["UserID"];
+}
+
+<h2>แจ้งซ่อม</h2>
+<hr>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-md-12">
+        
+        <div class="col-md-3"></div>
+        <div class="col-md-6" style="background-color:lightgrey;" >
+   
+            <div class="form-horizontal">
+                <h3 class="text-center"><i class="glyphicon glyphicon-pencil"> </i>กรอกรายละอียดการแจ้งซ่อม</h3>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.Label("หัวข้อที่แจ้ง", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @{
+                            List<SelectListItem> listItems = new List<SelectListItem>();
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "ไฟฟ้า",
+                                Value = "ไฟฟ้า"
+                            });
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "ปะปา",
+                                Value = "ปะปา",
+
+                            });
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "สิ่งของชำรุด",
+                                Value = "สิ่งของชำรุด",
+
+                            });
+
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "อื่นๆ",
+                                Value = "อื่นๆ",
+
+                            });
+
+                        }
+
+                        @Html.DropDownListFor(model => model.jobname, listItems, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.jobname, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    @Html.Label("รายละเอียด", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.descript, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.descript, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+               
+            
+
+
+
+                @if (Session["UserID"] != null && Session["permiss"].ToString() == "student")
+                {
+                    @Html.HiddenFor(model => model.studentid, new { Value = Session["UserID"].ToString() })
+                    @Html.HiddenFor(model => model.status, new { Value = "New" })
+                    @Html.HiddenFor(model => model.roomno, new { Value = Session["room"].ToString() })
+                    @Html.HiddenFor(model => model.datetime, new { @Value = @DateTime.Now.ToShortDateString() })
+                }
+
+
+               
+
+                <div class="form-group">
+                    <label class="control-label col-md-3"> &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;</label> <br>
+
+                    <div class="col-md-9">
+                        <label> เมื่อไม่มีคนอยู่ห้อง อณุญาตให้เข้าไปซ่อมหรือไม่</label> <br>
+                        @Html.RadioButtonFor(model => model.choich, "อณุญาต")
+
+                        <label>อุณุญาต</label>
+                        @Html.RadioButtonFor(model => model.choich, "ไม่อณุญาต")
+                        <label>ไม่อุณุญาต</label>
+                        @Html.ValidationMessageFor(model => model.choich, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <div class="col-md-offset-5 col-md-12">
+                        <input type="submit" value="ตกลง" class="btn btn-success" />
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-md-3">
+        </div>
+
+        <div class="col-md-12 pull-left">
+          
+                <button class="btn btn-primary" style="margin-left:5px" onclick="location.href='@Url.Action("Index", "repairs")'">
+                    กลับไปก่อนหน้า
+                    <i class="glyphicon glyphicon-pencil"> </i>
+
+                </button>
+            <br>
+            <hr>
+            </div>
+        
+     
+        </div>
+        
+
+                            }
+
+          
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }

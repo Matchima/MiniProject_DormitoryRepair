@@ -1,0 +1,70 @@
+﻿@if (Session["UserID"] == null || Session["permiss"].ToString() == "student")
+{
+    Response.Redirect("~/Home/Index");
+}
+@model Repair.Models.employee
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>employee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.employeeid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employeeid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tell)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tell)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.permiss)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.permiss)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

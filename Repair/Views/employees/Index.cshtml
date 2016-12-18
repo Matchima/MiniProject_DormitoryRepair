@@ -1,0 +1,60 @@
+﻿@if (Session["UserID"] == null || Session["permiss"].ToString() == "student")
+{
+    Response.Redirect("~/Home/Index");
+}
+
+@model IEnumerable<Repair.Models.employee>
+
+@{
+    ViewBag.Title = "จัดการพนักงาน";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("เพิ่มพนักงาน", "Create")
+</p>
+<table class="table">
+    <tr>
+        
+        <th>
+           รหัสพนักงาน
+        </th>
+        <th>
+           ชื่อ
+        </th>
+        <th>
+           สกุล
+        </th>
+        <th>
+           เบอร์โทรศัพท์
+        </th>
+      
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.employeeid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lname)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.tell)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

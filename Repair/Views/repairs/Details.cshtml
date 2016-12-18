@@ -1,0 +1,78 @@
+﻿@if (Session["UserID"] == null)
+{
+    Response.Redirect("~/Home/Index");
+}
+@model Repair.Models.repair
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>รายละเอียดการแจ้งซ่อม</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           <label>หัวข้อที่แจ้ง</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.jobname)
+        </dd>
+
+        <dt>
+            <label>รายละเอียด</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descript)
+        </dd>
+
+        <dt>
+            <label>วันเวลาที่แจ้ง</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.datetime)
+        </dd>
+
+        <dt>
+            <label>สถานะ</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            <label>รหัสนักศึกษา</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.studentid)
+        </dd>
+
+        <dt>
+            <label>หมายเลขห้องพัก</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.roomno)
+        </dd>
+
+        <dt>
+            <label>การอนุญาตเมื่อไม่อยู่ห้อง</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.choich)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
